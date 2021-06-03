@@ -6,6 +6,7 @@ Created on Sun May 30 04:06:22 2021
 """
 from py2neo import NodeMatcher
 
+
 def likingdatingapps(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based if the users likes dating apps or not
     Args:
@@ -14,8 +15,10 @@ def likingdatingapps(user_preferences: dict, matcher: NodeMatcher):
     Returns:
         **
     """
-    equal_styles = list(matcher.match("User", apps=user_preferences["app_citas"] ))
+    appsPreferidas = user_preferences["app_citas"]
+    equal_styles = list(matcher.match("User", apps = appsPreferidas))
     return equal_styles
+
 
 def similarRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based if the users likes dating apps or not
@@ -25,9 +28,10 @@ def similarRecommendation(user_preferences: dict, matcher: NodeMatcher):
     Returns:
         **
     """
-    similar = "_.gustos_similares=~ '{:s}'".format(user_preferences["gustos_similares"])
-    equal_styles = list(matcher.match("User").where(similar))
+    similarE = user_preferences["gustos_similares"]
+    equal_styles = list(matcher.match("User",similar = similarE))
     return equal_styles
+
 
 def profesionalRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based if the users likes dating apps or not
@@ -37,9 +41,10 @@ def profesionalRecommendation(user_preferences: dict, matcher: NodeMatcher):
     Returns:
         **
     """
-    profesional = "_.vida_profesional=~ '{:s}'".format(user_preferences["vida_profesional"])
-    equal_styles = list(matcher.match("User").where(profesional))
+    profesional = user_preferences["vida_profesional"]
+    equal_styles = list(matcher.match("User", prof = profesional))
     return equal_styles
+
 
 def goalsRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based if the users likes dating apps or not
@@ -49,106 +54,115 @@ def goalsRecommendation(user_preferences: dict, matcher: NodeMatcher):
     Returns:
         **
     """
-    goals = "_.Metas_similares=~ '{:s}'".format(user_preferences["Metas_similares"])
-    equal_styles = list(matcher.match("User").where(goals))
+    goalsE = user_preferences["Metas_similares"]
+    equal_styles = list(matcher.match("User", goals = goalsE))
     return equal_styles
+
 
 def difficultydates(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based if the users has difficulty on finding a date 
+    """Calculates a recommendation based if the users has difficulty on finding a date
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    dates = "_.dificultad_citas=~ '{:s}'".format(user_preferences["dificultad_citas"])
-    equal_styles = list(matcher.match("User", ))
+    dates = user_preferences["dificultad_citas"]
+    equal_styles = list(matcher.match("User"), dificultad = dates)
     return equal_styles
+
 
 def musictaste(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    music = "_.dificultad_citas=~ '{:s}'".format(user_preferences["gusto_musical"])
-    equal_styles = list(matcher.match("User").where(music))
+    music = user_preferences["gusto_musical"]
+    equal_styles = list(matcher.match("User", gusto = music))
     return equal_styles
+
 
 def sameregion(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    region = "_.misma_region=~ '{:s}'".format(user_preferences["misma_region"])
-    equal_styles = list(matcher.match("User").where(region))
+    regionE = user_preferences["misma_region"]
+    equal_styles = list(matcher.match("User", region = regionE))
     return equal_styles
+
 
 def samehobbies(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based on the users wanting that their future couple to 
-    have similar hobbies 
+    """Calculates a recommendation based on the users wanting that their future couple to
+    have similar hobbies
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    hobbies = "_.hobbies=~ '{:s}'".format(str(user_preferences["importancia_hobbies"]))
-    equal_styles = list(matcher.match("Character").where(hobbies))
+    hobbies = user_preferences["importancia_hobbies"]
+    equal_styles = list(matcher.match("User", importancia = hobbies))
     return equal_styles
+
 
 def different(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    likes = "_.gusto_diferente=~ '{:s}'".format(user_preferences["gusto_diferente"])
-    equal_styles = list(matcher.match("User").where(likes))
+    likes = user_preferences["gusto_diferente"]
+    equal_styles = list(matcher.match("User", gustoDif = likes))
     return equal_styles
+
 
 def habits(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    goodhabits = "_.buenos_habitos=~ '{:s}'".format(user_preferences["buenos_habitos"])
-    equal_styles = list(matcher.match("User").where(goodhabits))
+    goodhabits = user_preferences["Buenos_habitos"]
+    equal_styles = list(matcher.match("User", Habits = goodhabits))
     return equal_styles
+
 
 def ParejaRecommendation(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    pareja = "_.tiene_pareja=~ '{:s}'".format(user_preferences["tiene_pareja"])
-    equal_styles = list(matcher.match("User").where(pareja))
+    parejaE = user_preferences["tiene_pareja"]
+    equal_styles = list(matcher.match("User", pareja = parejaE))
     return equal_styles
 
+
 def study(user_preferences: dict, matcher: NodeMatcher):
-    """Calculates a recommendation based users choice 
+    """Calculates a recommendation based users choice
     Args:
         *user_preferences (dict)
         *matcher (NodeMatcher)
     Returns:
         **
     """
-    studysame = "_.importancia_estudios=~ '{:s}'".format(user_preferences["importancia_estudios"])
-    equal_styles = list(matcher.match("User").where(studysame))
+    studysame = user_preferences["importancia_estudios"]
+    equal_styles = list(matcher.match("User", imp = studysame))
     return equal_styles
+
 
 def mainRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based on the player's responses (when none matches an existing character)
@@ -161,27 +175,25 @@ def mainRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """
     print("***************************************************\n          Recomendaciones principales\n"
           "***************************************************")
-    pareja= ParejaRecommendation(dict, matcher)
+    pareja = ParejaRecommendation(dict, matcher)
     apps = likingdatingapps(dict, matcher)
-    dificultad= difficultydates(dict, matcher)
+    dificultad = difficultydates(dict, matcher)
     importancia = samehobbies(dict, matcher)
-    imp= study(dict, matcher)
+    imp = study(dict, matcher)
     gusto = musictaste(dict, matcher)
-    region= sameregion(dict, matcher)
+    region = sameregion(dict, matcher)
     gustoDif = different(dict, matcher)
-    Habits= habits(dict, matcher)
+    Habits = habits(dict, matcher)
     goals = goalsRecommendation(dict, matcher)
-    prof= profesionalRecommendation(dict, matcher)
+    prof = profesionalRecommendation(dict, matcher)
     similar = similarRecommendation(dict, matcher)
-    
-    listaopciones=[pareja, apps, dificultad, importancia, imp, gusto, region, gustoDif, Habits, goals, prof, similar]
-    
-    Prospectos={}
+
+    listaopciones = [pareja, apps, dificultad, importancia, imp, gusto, region, gustoDif, Habits, goals, prof, similar]
+
+    Prospectos = {}
     for option in listaopciones:
-        for element in option: 
+        for element in option:
             if Prospectos.has_key(element["nombre"]):
-                Prospectos[element["nombre"]]=1
-            else : 
-                Prospectos[element["nombre"]]=Prospectos[element["nombre"]]+1
-    
-    
+                Prospectos[element["nombre"]] = 1
+            else:
+                Prospectos[element["nombre"]] = Prospectos[element["nombre"]] + 1
