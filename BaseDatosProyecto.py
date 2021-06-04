@@ -90,9 +90,9 @@ def generateDatabase():
             db.create(Relationship(userDict[user], "dificultad_citas", cincoDif))
 
         # Importancia en igualdad de hobbies
-        if importancia == "Si, si es importante":
+        if importancia == "Si":
             db.create(Relationship(userDict[user], "importancia_hobbies", siImportancia))
-        elif importancia == "No, no es importante":
+        elif importancia == "No":
             db.create(Relationship(userDict[user], "importancia_hobbies", noImportancia))
 
         # Importancia de trabajar o estudiar en lugares similares
@@ -186,9 +186,9 @@ def generate_user(user_preferences: dict):
         db.create(Relationship(user, "dificultad_citas", cincoDif))
 
     # Importancia en igualdad de hobbies
-    if user_preferences["importancia_hobbies"] == "Si, si es importante":
+    if user_preferences["importancia_hobbies"] == "Si":
         db.create(Relationship(user, "importancia_hobbies", siImportancia))
-    elif user_preferences["importancia_hobbies"] == "No, no es importante":
+    elif user_preferences["importancia_hobbies"] == "No":
         db.create(Relationship(user, "importancia_hobbies", noImportancia))
 
     # Importancia de trabajar o estudiar en lugares similares
@@ -353,9 +353,9 @@ def generateNUsers():
             db.create(Relationship(userDict[user], "dificultad_citas", cincoDif))
 
         # Importancia en igualdad de hobbies
-        if importancia == "Si, si es importante":
+        if importancia == "Si":
             db.create(Relationship(userDict[user], "importancia_hobbies", siImportancia))
-        elif importancia == "No, no es importante":
+        elif importancia == "No":
             db.create(Relationship(userDict[user], "importancia_hobbies", noImportancia))
 
         # Importancia de trabajar o estudiar en lugares similares
