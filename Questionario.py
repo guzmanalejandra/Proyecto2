@@ -142,7 +142,7 @@ def PreguntarCitas():
 
 def PreguntarHobbies():
     print("¿Es importante que tengan hobbies similares con tu posible pareja?")
-    print("1. Si\n2. No")
+    print("1. Si, es importante\n2. No, no es importante")
     while True:
         try:
             respuesta = int(input("Digite su respuesta: "))

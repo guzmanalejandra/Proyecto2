@@ -6,7 +6,6 @@ Created on Sun May 30 04:06:22 2021
 """
 from py2neo import NodeMatcher
 
-
 def likingdatingapps(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based if the users likes dating apps or not
     Args:
@@ -68,7 +67,7 @@ def difficultydates(user_preferences: dict, matcher: NodeMatcher):
         **
     """
     dates = user_preferences["dificultad_citas"]
-    equal_styles = list(matcher.match("User"), dificultad = dates)
+    equal_styles = list(matcher.match("User", dificultad = dates))
     return equal_styles
 
 
@@ -163,6 +162,12 @@ def study(user_preferences: dict, matcher: NodeMatcher):
     equal_styles = list(matcher.match("User", imp = studysame))
     return equal_styles
 
+def ordenar_diccionario(diccionario: dict):
+    ordenado = sorted(diccionario.items(), key=lambda x: x[1])
+    nombres = []
+    for elemento in ordenado:
+        nombres.append(elemento[0])
+    return nombres
 
 def mainRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """Calculates a recommendation based on the player's responses (when none matches an existing character)
@@ -175,25 +180,30 @@ def mainRecommendation(user_preferences: dict, matcher: NodeMatcher):
     """
     print("***************************************************\n          Recomendaciones principales\n"
           "***************************************************")
-    pareja = ParejaRecommendation(dict, matcher)
-    apps = likingdatingapps(dict, matcher)
-    dificultad = difficultydates(dict, matcher)
-    importancia = samehobbies(dict, matcher)
-    imp = study(dict, matcher)
-    gusto = musictaste(dict, matcher)
-    region = sameregion(dict, matcher)
-    gustoDif = different(dict, matcher)
-    Habits = habits(dict, matcher)
-    goals = goalsRecommendation(dict, matcher)
-    prof = profesionalRecommendation(dict, matcher)
-    similar = similarRecommendation(dict, matcher)
-
-    listaopciones = [pareja, apps, dificultad, importancia, imp, gusto, region, gustoDif, Habits, goals, prof, similar]
-
-    Prospectos = {}
+    pareja= ParejaRecommendation(user_preferences, matcher)
+    apps = likingdatingapps(user_preferences, matcher)
+    dificultad= difficultydates(user_preferences, matcher)
+    importancia = samehobbies(user_preferences, matcher)
+    imp= study(user_preferences, matcher)
+    gusto = musictaste(user_preferences, matcher)
+    region= sameregion(user_preferences, matcher)
+    gustoDif = different(user_preferences, matcher)
+    Habits= habits(user_preferences, matcher)
+    goals = goalsRecommendation(user_preferences, matcher)
+    prof= profesionalRecommendation(user_preferences, matcher)
+    similar = similarRecommendation(user_preferences, matcher)
+    
+    listaopciones=[pareja, apps, dificultad, importancia, imp, gusto, region, gustoDif, Habits, goals, prof, similar]
+    
+    Prospectos={}
     for option in listaopciones:
-        for element in option:
-            if Prospectos.has_key(element["nombre"]):
-                Prospectos[element["nombre"]] = 1
-            else:
-                Prospectos[element["nombre"]] = Prospectos[element["nombre"]] + 1
+        for element in option: 
+            if element["nombre"] not in Prospectos:
+                Prospectos[element["nombre"]]=1
+            else : 
+                Prospectos[element["nombre"]]=Prospectos[element["nombre"]]+1
+    lista= ordenar_diccionario(Prospectos)
+    for i in range(len(lista)):
+        print(i+1,") ", lista[i])
+    
+    

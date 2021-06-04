@@ -12,13 +12,11 @@ import BaseDatosProyecto as database
 User={}
 
 def EntrarUsuario(nombres: str, contraseña: str, matcher:NodeMatcher):
-    #user = "_.usuario =~ '{:s}.*'".format(str(nombres))
-    #contra = "_.contra =~ '{:s}.*'".format(str(contraseña))
-    #pareja = "_.tiene_pareja=~ '{:s}'".format("Si")
     lista = list(matcher.match("NUser", usuario= nombres, contra= contraseña))
-    print(lista)
     if not lista: 
-        Nodo= lista
+        print("Usuario no existe, por favor intente de nuevo")
+    else: 
+        Nodo= lista[0]
         userDict={}
         userDict["usuario"] = Nodo["usuario"]
         userDict["contrasena"] = Nodo["contra"]
@@ -36,39 +34,41 @@ def EntrarUsuario(nombres: str, contraseña: str, matcher:NodeMatcher):
         userDict["Metas_similares"] = Nodo["metas_similares"]
         userDict["vida_profesional"] = Nodo["vida_profesional"]
         userDict["gustos_similares"] = Nodo["gustos_similares"]
-    
         mainRecommendation(userDict, matcher)
-        print("Gracias por usar Play Date.")
-    else: 
-        print("Usuario no existe, por favor intente de nuevo")
 
 def agregar_usuario(matcher: NodeMatcher):
     userDict = questionario(matcher)
     database.generate_user(userDict)
+    database.diccionario_archivo("BaseNUsers.csv", userDict)
 
 def eliminaruser(matcher: NodeMatcher ):
       tf = True
       while (tf): 
             
-            nombres=input("Ingrese el usuario que desea eliminar: ")
+            nombres=input("Ingrese el usuario que desea eliminar:")
             
-            user_list = list(matcher.match("Nuser").where(nombres))
+            user_list = list(matcher.match("NUser", usuario= nombres))
             if not user_list:
                   print("Este usuario no existe, intente de nuevo para eliminar")
             else: 
                   
-                  contra =input("Ingrese contraseña:")
-                  user_list2= list(matcher.match("Nuser").where(nombres).where(contra))
+                  contrase =input("Ingrese contraseña:")
+                  user_list2= list(matcher.match("NUser", usuario= nombres, contra= contrase))
                   if not user_list2:
                       print("Esta contraseña es incorrecta, intente de nuevo para eliminar")
                   else:
-                        database.deleteUser(nombres, contra, matcher)
+                        database.deleteUser(nombres, contrase, matcher)
+                        database.db.delete_all()
+                        database.generateDatabase()
+                        database.generateNUsers()
                         tf=False
     
-print("Bienvenida,  puta")
+print("Bienvenidx a PlayDate, tu mejor opción para encontrar el amor. ")
 tf=True
 database.db.delete_all()
 database.generateDatabase()
+database.generateNUsers()
+
 while (tf):
     print("Que desea hacer?\n1) Crear un nuevo usuario \n2) Ingresar a su cuenta\n3) Eliminar su usuario\n4) Salir")
     respuesta=input()
@@ -85,5 +85,5 @@ while (tf):
     elif respuesta=="4": 
         tf=False
     else: 
-        print("Elija una opción correcta, puta.")
-print("gracias, puta")
+        print("Por favor, elija una opción correcta.")
+print("Gracias por usar nuestro programa")
